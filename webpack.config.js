@@ -3,8 +3,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   watch: false,
-  mode: "production",
-  entry: "./src/leaflet.qgsmeasure.js",
+  mode: 'production',
+  entry: './src/leaflet.qgsmeasure.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'leaflet.qgsmeasure.min.js',

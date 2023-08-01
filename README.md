@@ -1,17 +1,17 @@
-Leaflet.MeasureControl
+Leaflet.QgsMeasure
 ======================
 
-Leaflet control to mesure distances on the map.
+Leaflet control to mesure distances on the map like Qgis Ruler.
 
 Requires [Leaflet.Draw](https://github.com/leaflet/Leaflet.Draw#readme)
 
-Check out the [demo](http://makinacorpus.github.io/Leaflet.MeasureControl/)
+Check out the [demo](https://gabriel-russo.github.io/Leaflet.QgsMeasure/)
 
 Install
 -------
 
 ```shell
-npm install leaflet.measurecontrol
+npm install leaflet-qgsmeasure
 ```
 
 Usage
@@ -20,22 +20,25 @@ Usage
 As map option:
 
 ```js
-var map = L.map('map', { measureControl:true });
+const map = L.map('map', { measureControl: true });
 ```
 
 Or like any control:
 
 ```js
-L.Control.measureControl().addTo(map);
+L.Control.qgsmeasure()
+  .addTo(map);
 ```
 
 Development
 -----------
 
 ```shell
-npm install      # install dependencies
-npm run release  # minify js and copy sources in docs (example)
+npm install --save-dev     # install dependencies
+npm run dev  # Compile and save at dist/ after any change
 ```
+
+Open index.html in your browser and start editing.
 
 Changelog
 ---------
@@ -44,8 +47,12 @@ See [CHANGELOG.md](./CHANGELOG.md).
 
 Authors
 -------
+* Gabriel Russo
+
+
+Forked from (Credits)
+-------
 
 * Gilles Bassière
 * Alexandra Janin
-
-[![Makina Corpus](http://depot.makina-corpus.org/public/logo.gif)](http://makinacorpus.com)
+* Makina Corpus

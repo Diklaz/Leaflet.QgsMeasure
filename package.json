@@ -1,5 +1,5 @@
 {
-  "name": "leaflet.qgsmeasure",
+  "name": "leaflet-qgsmeasure",
   "version": "0.0.1",
   "description": "Leaflet control to mesure distances on the map like Qgis Ruler.",
   "files": [
@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "webpack --config=webpack.dev.config.js",
     "build": "webpack --config=webpack.config.js",
-    "lint": "eslint leaflet.measurecontrol.js"
+    "lint": "eslint src/leaflet.qgsmeasure.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,10 @@
   "keywords": [
     "leaflet",
     "measure",
-    "rule"
+    "rule",
+    "qgsmeasure",
+    "leaflet plugin",
+    "ruler"
   ],
   "author": "Gabriel M. Russo",
   "license": "MIT",
@@ -32,7 +35,6 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.28.0",
     "mini-css-extract-plugin": "^2.7.6",
-    "uglify-js": "^3.17.4",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },
