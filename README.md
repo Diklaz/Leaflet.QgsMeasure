@@ -5,7 +5,7 @@ Leaflet control to mesure distances on the map like Qgis Ruler.
 
 Requires [Leaflet.Draw](https://github.com/leaflet/Leaflet.Draw#readme)
 
-Check out the [demo](https://gabriel-russo.github.io/Leaflet.QgsMeasure/)
+Check out the [demo](https://gabriel-russo.github.io/Leaflet.QgsMeasure/example/)
 
 Install
 -------
