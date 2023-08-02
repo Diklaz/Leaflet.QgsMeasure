@@ -19,11 +19,26 @@
           crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 
-<body>
-<div id="map" style="width: 99vw; height: 85vh"></div>
+<style>
+    .horizontal-stack {
+        display: flex;
+        flex-direction: row;
+        gap: 10px
+    }
 
-<div>
+    .measures-container {
+        min-width: 60px;
+    }
+</style>
+
+<body class="horizontal-stack">
+<div id="map" style="width: 50vw; height: 97vh"></div>
+<div class="measures-container">
+    <h4>Segments [meters]</h4>
     <ul id="segments-list"></ul>
+    <div>
+        <h6 id="total-distance">Total distance:</h6>
+    </div>
 </div>
 
 </body>
@@ -37,11 +52,12 @@
     return listElement;
   }
 
-  function clearList() {
+  function clear() {
     const list = document.getElementById("segments-list");
     while (list.firstChild) {
       list.removeChild(list.firstChild);
     }
+    document.getElementById("total-distance").innerText = "Total distance:";
   }
 </script>
 
@@ -62,12 +78,21 @@
   map.addEventListener("qgsmeasure:newsegment", (e) => {
     let { segments } = e;
 
-    const lastSegment = segments.pop();
+    let total = segments.reduce((acc, segment) => {
+      console.log(acc, segment);
+      return acc + segment.distance;
+    }, 0);
 
-    measureContainer.appendChild(listItemComponent(`From ${lastSegment.from} -> To ${lastSegment.to} = ${lastSegment.distance.toFixed(2)} meters`));
+    document.getElementById("total-distance").innerText = `Total distance: ${total.toFixed(2)} meters`;
+
+    const lastSegment = segments.at(-1);
+
+    measureContainer.appendChild(
+      listItemComponent(`From ${lastSegment.from} -> To ${lastSegment.to} = ${lastSegment.distance.toFixed(2)} meters`)
+    );
   });
 
-  map.addEventListener("qgsmeasure:measurestop", clearList);
+  map.addEventListener("qgsmeasure:measurestop", clear);
 
 </script>
 
