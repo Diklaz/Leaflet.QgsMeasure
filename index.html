@@ -9,30 +9,38 @@
     <script type="text/javascript" src="dist/leaflet.qgsmeasure.min.js"></script>
 </head>
 
-<body>
-<div id="map" style="width: 99vw; height: 85vh"></div>
-<div class="measures-container">
-    <ul id="segments-list"></ul>
-</div>
-
-</body>
-
-<script>
-  function listItemComponent(text) {
-    const listElement = document.createElement("li");
-    const textnode = document.createTextNode(text);
-    listElement.appendChild(textnode);
-
-    return listElement;
-  }
-
-  function clearList() {
-    const list = document.getElementById("segments-list");
-    while (list.firstChild) {
-      list.removeChild(list.firstChild);
+<style>
+    html {
+        font-family: Helvetica, sans-serif;
     }
-  }
-</script>
+
+    .plugin-title {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        margin: 10px;
+    }
+
+    .plugin-title span {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-right: 35px;
+    }
+
+    .plugin-title a {
+        text-align: center;
+        align-self: center;
+        text-decoration: none;
+    }
+</style>
+
+<body>
+<div class="plugin-title">
+    <span>Leaflet.QgsMeasure</span>
+    <a href="https://github.com/gabriel-russo/Leaflet.QgsMeasure">github.com/gabriel-russo/Leaflet.QgsMeasure</a>
+</div>
+<div id="map" style="width: 98vw; height: 85vh"></div>
+</body>
 
 <script type="text/javascript">
   const osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -45,19 +53,6 @@
 
   L.Control.qgsmeasure()
     .addTo(map);
-
-  const measureContainer = document.getElementById("segments-list");
-
-  map.addEventListener("qgsmeasure:newsegment", (e) => {
-    let { segments } = e;
-
-    const lastSegment = segments.pop();
-
-    measureContainer.appendChild(listItemComponent(`From ${lastSegment.from} -> To ${lastSegment.to} = ${lastSegment.distance.toFixed(2)} meters`));
-  });
-
-  map.addEventListener("qgsmeasure:measurestop", clearList);
-
 </script>
 
 </html>

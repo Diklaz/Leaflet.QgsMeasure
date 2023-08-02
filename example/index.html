@@ -20,46 +20,37 @@
 </head>
 
 <style>
-    .horizontal-stack {
-        display: flex;
-        flex-direction: row;
-        gap: 10px
+    html {
+        font-family: Helvetica, sans-serif;
     }
 
-    .measures-container {
-        min-width: 60px;
+    .plugin-title {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        margin: 10px;
+    }
+
+    .plugin-title span {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-right: 35px;
+    }
+
+    .plugin-title a {
+        text-align: center;
+        align-self: center;
+        text-decoration: none;
     }
 </style>
 
-<body class="horizontal-stack">
-<div id="map" style="width: 50vw; height: 97vh"></div>
-<div class="measures-container">
-    <h4>Segments [meters]</h4>
-    <ul id="segments-list"></ul>
-    <div>
-        <h6 id="total-distance">Total distance:</h6>
-    </div>
+<body>
+<div class="plugin-title">
+    <span>Leaflet.QgsMeasure</span>
+    <a href="https://github.com/gabriel-russo/Leaflet.QgsMeasure">github.com/gabriel-russo/Leaflet.QgsMeasure</a>
 </div>
-
+<div id="map" style="width: 98vw; height: 85vh"></div>
 </body>
-
-<script>
-  function listItemComponent(text) {
-    const listElement = document.createElement("li");
-    const textnode = document.createTextNode(text);
-    listElement.appendChild(textnode);
-
-    return listElement;
-  }
-
-  function clear() {
-    const list = document.getElementById("segments-list");
-    while (list.firstChild) {
-      list.removeChild(list.firstChild);
-    }
-    document.getElementById("total-distance").innerText = "Total distance:";
-  }
-</script>
 
 <script type="text/javascript">
   const osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -72,28 +63,6 @@
 
   L.Control.qgsmeasure()
     .addTo(map);
-
-  const measureContainer = document.getElementById("segments-list");
-
-  map.addEventListener("qgsmeasure:newsegment", (e) => {
-    let { segments } = e;
-
-    let total = segments.reduce((acc, segment) => {
-      console.log(acc, segment);
-      return acc + segment.distance;
-    }, 0);
-
-    document.getElementById("total-distance").innerText = `Total distance: ${total.toFixed(2)} meters`;
-
-    const lastSegment = segments.at(-1);
-
-    measureContainer.appendChild(
-      listItemComponent(`From ${lastSegment.from} -> To ${lastSegment.to} = ${lastSegment.distance.toFixed(2)} meters`)
-    );
-  });
-
-  map.addEventListener("qgsmeasure:measurestop", clear);
-
 </script>
 
 </html>
