@@ -112,12 +112,12 @@ L.Control.QgsMeasure = L.Control.extend({
   },
 
   onAdd(map) {
-    let link = null;
-    let className = 'leaflet-control-draw';
-
-    this._container = L.DomUtil.create('div', 'leaflet-bar');
-
     this.handler = new L.Polyline.Measure(map, this.options);
+
+    if (this.options.button) {
+      L.DomEvent.on(this.options.button, "click", this.toggle, this);
+      return L.DomUtil.create('div', 'leaflet-bar'); // Leaflet needs a DOM element returned
+    }
 
     this._map.on("qgsmeasure:measurestart", this._createSegmentContainer, this);
     this._map.on("qgsmeasure:newsegment", this._startMeasure, this);
@@ -135,6 +135,9 @@ L.Control.QgsMeasure = L.Control.extend({
       this._finishMeasure();
     }, this);
 
+    let link = null;
+    let className = 'leaflet-control-draw';
+    this._container = L.DomUtil.create('div', 'leaflet-bar');
     link = L.DomUtil.create('a', `${className}-measure`, this._container);
     link.href = '#';
     link.title = this.options.text.title;
@@ -145,6 +148,12 @@ L.Control.QgsMeasure = L.Control.extend({
       .addListener(link, 'click', this.toggle, this);
 
     return this._container;
+  },
+
+  onRemove() {
+    if (this.options.button) {
+      L.DomEvent.off(this.options.button, 'click', this.toggle, this);
+    }
   },
 });
 

@@ -1,5 +1,4 @@
-Leaflet.QgsMeasure
-======================
+# Leaflet.QgsMeasure
 
 Leaflet control to measure segment distances on the map like Qgis Ruler.
 
@@ -7,21 +6,19 @@ Requires [Leaflet](https://github.com/Leaflet/Leaflet/releases) 1.0.0+ branches
 
 Requires [Leaflet.Draw](https://github.com/leaflet/Leaflet.Draw#readme)
 
-Install
--------
+## Install
 
 ```shell
 npm install leaflet-qgsmeasure
 ```
 
-Demo
--------
+## Demo
+
 Check out the [demo](https://gabriel-russo.github.io/Leaflet.QgsMeasure/example/)
 
 ![](docs/images/example_screenshot.png)
 
-Usage
------
+## Usage
 
 As map option:
 
@@ -33,14 +30,15 @@ Or like any control:
 
 ```js
 const options = {}; // See docs to see options
-L.Control.qgsmeasure(options).addTo(map);
+L.Control.qgsmeasure(options)
+  .addTo(map);
 ```
 
 ## Docs
 
 ### Options:
 
-```javascript
+```js
 // Default plugin options object, change wathever you want
 options = {
   position: 'topleft',
@@ -69,7 +67,7 @@ options = {
 
 * `qgsmeasure:measurestart` - Event fired when the measure starts
 * `qgsmeasure:newsegment` - Event fired when a new segment/vertex is added
-  ```javascript
+  ```js
   // Event data example:
   {
     segments: [ // List with every segment on map
@@ -91,28 +89,42 @@ options = {
   ```
 * `qgsmeasure:measurestop` - Event fired when the measure stops
 
-Development
------------
+### Custom html button
+
+If you are developing a web application and you want to use your own html button outside the map container, you can use
+the following code:
+
+```javascript
+const options = {
+  button: document.getElementById('my-button'), // Your html button HTML reference
+}
+
+const control = L.Control.qgsmeasure(options)
+  .addTo(map);
+```
+
+After that, you have to make your own segments output box using the events described above.
+
+You can see the example [here](https://gabriel-russo.github.io/Leaflet.QgsMeasure/example/with-button.html)
+
+## Development
 
 ```shell
 npm install --save-dev     # install dependencies
 npm run dev  # Compile and save at dist/ after any change
 ```
 
-Open index.html in your browser and start editing.
+Open `index.html` in your browser and start editing.
 
-Changelog
----------
+## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md).
 
-Authors
--------
+## Authors
 
 * Gabriel Russo
 
-Forked from (Credits)
--------
+## Forked from (Credits)
 
 * Gilles Bassière
 * Alexandra Janin
