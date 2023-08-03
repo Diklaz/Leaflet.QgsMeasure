@@ -1,7 +1,7 @@
 {
   "name": "leaflet-qgsmeasure",
-  "version": "0.0.2",
-  "description": "Leaflet control to mesure distances on the map like Qgis Ruler.",
+  "version": "0.0.4",
+  "description": "Leaflet control to measure segment distances on the map like Qgis Ruler.",
   "files": [
     "dist"
   ],

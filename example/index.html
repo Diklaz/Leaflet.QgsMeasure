@@ -13,9 +13,9 @@
 
     <!-- Leaflet Euclides -->
     <script type="application/javascript"
-            src="https://unpkg.com/leaflet-qgsmeasure@0.0.2/dist/leaflet.qgsmeasure.min.js"
+            src="https://unpkg.com/leaflet-qgsmeasure@0.0.4/dist/leaflet.qgsmeasure.min.js"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-qgsmeasure@0.0.2/dist/leaflet.qgsmeasure.css"
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-qgsmeasure@0.0.4/dist/leaflet.qgsmeasure.css"
           crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 
@@ -53,13 +53,13 @@
 </body>
 
 <script type="text/javascript">
-  const osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; 2013 OpenStreetMap contributors',
+  const wi = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
   });
 
   const map = L.map('map')
-    .setView([-23.70078702319699, -46.69719607766831], 16)
-    .addLayer(osm);
+    .setView([-15.798654271090207, -47.86738872528077], 17)
+    .addLayer(wi);
 
   L.Control.qgsmeasure()
     .addTo(map);

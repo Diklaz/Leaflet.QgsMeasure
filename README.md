@@ -1,7 +1,9 @@
 Leaflet.QgsMeasure
 ======================
 
-Leaflet control to mesure distances on the map like Qgis Ruler.
+Leaflet control to measure segment distances on the map like Qgis Ruler.
+
+Requires [Leaflet](https://github.com/Leaflet/Leaflet/releases) 1.0.0+ branches
 
 Requires [Leaflet.Draw](https://github.com/leaflet/Leaflet.Draw#readme)
 
@@ -37,8 +39,9 @@ L.Control.qgsmeasure(options).addTo(map);
 ## Docs
 
 ### Options:
+
 ```javascript
-// Default Options object
+// Default plugin options object, change wathever you want
 options = {
   position: 'topleft',
   shapeOptions: {
@@ -51,7 +54,15 @@ options = {
     iconSize: new L.Point(9, 9),
     className: 'leaflet-div-icon leaflet-editing-icon',
   }),
-}
+  text: {
+    title: 'Measure distances', // Plugin Button Text
+    segments_title: 'Segments (meters)', // Segments box title
+    segments_from: "From ", // Segment start label
+    segments_to: "to ", // Segment end label
+    segments_total: 'Total: ', // Total distance label
+    segments_meters: "m", // Meters label
+  },
+};
 ```
 
 ### Events:
@@ -61,7 +72,7 @@ options = {
   ```javascript
   // Event data example:
   {
-    segments: [
+    segments: [ // List with every segment on map
       {
         from: 1,
         to: 2,
@@ -97,6 +108,7 @@ See [CHANGELOG.md](./CHANGELOG.md).
 
 Authors
 -------
+
 * Gabriel Russo
 
 Forked from (Credits)

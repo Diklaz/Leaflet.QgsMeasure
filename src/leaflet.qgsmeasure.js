@@ -3,15 +3,6 @@ import "./leaflet.polyline.measure.js";
 import "./leaflet.qgsmeasure.css";
 
 L.Control.QgsMeasure = L.Control.extend({
-
-  statics: {
-    TITLE: 'Measure distances',
-    SEGMENTS_TITLE: 'Segments (meters):',
-    SEGMENTS_FROM: "From: ",
-    SEGMENTS_TO: "to: ",
-    SEGMENTS_TOTAL: 'Total: ',
-    SEGMENTS_METERS: "m",
-  },
   options: {
     position: 'topleft',
     handler: {},
@@ -27,6 +18,14 @@ L.Control.QgsMeasure = L.Control.extend({
       iconSize: new L.Point(9, 9),
       className: 'leaflet-div-icon leaflet-editing-icon',
     }),
+    text: {
+      title: 'Measure distances',
+      segments_title: 'Segments (meters)',
+      segments_from: "From ",
+      segments_to: "to ",
+      segments_total: 'Total: ',
+      segments_meters: "m",
+    },
   },
 
   toggle() {
@@ -42,6 +41,14 @@ L.Control.QgsMeasure = L.Control.extend({
   },
 
   initialize(options) {
+    options = options || {};
+    /*
+      This fix this situation: The user change only one text option, then all the
+      this.options.text object is replaced by the new one, so the other options are lost,
+      showing "undefined" in the segments box.
+    */
+    options.text = L.Util.extend(this.options.text, options.text);
+
     L.Util.setOptions(this, options);
   },
 
@@ -64,7 +71,7 @@ L.Control.QgsMeasure = L.Control.extend({
     L.DomEvent.disableScrollPropagation(this._segments_container);
 
     /* Box Title */
-    this._createTextElement('span', 'segments-title', this._segments_container, L.Control.QgsMeasure.SEGMENTS_TITLE);
+    this._createTextElement('span', 'segments-title', this._segments_container, this.options.text.segments_title);
 
     /* Box containing all the measures */
     this._segments_measures_container = L.DomUtil.create('div', "segments-measures-container", this._segments_container);
@@ -73,7 +80,7 @@ L.Control.QgsMeasure = L.Control.extend({
     this._segments_total_distance_container = L.DomUtil.create('div', "segments-total-distance-container", this._segments_container);
 
     /* Initialize total distance text */
-    this._total_distance_text_reset = `${L.Control.QgsMeasure.SEGMENTS_TOTAL} 0 ${L.Control.QgsMeasure.SEGMENTS_METERS}`;
+    this._total_distance_text_reset = `${this.options.text.segments_total} 0 ${this.options.text.segments_meters}`;
     this._createTextElement('span', '', this._segments_total_distance_container, this._total_distance_text_reset);
     this._total_distance_text_element = document.getElementsByClassName('segments-total-distance-container')[0].firstChild;
   },
@@ -82,9 +89,9 @@ L.Control.QgsMeasure = L.Control.extend({
     let { segments } = e;
     const lastSegment = segments.at(-1);
 
-    const from = L.Control.QgsMeasure.SEGMENTS_FROM;
-    const to = L.Control.QgsMeasure.SEGMENTS_TO;
-    const meters = L.Control.QgsMeasure.SEGMENTS_METERS;
+    const from = this.options.text.segments_from;
+    const to = this.options.text.segments_to;
+    const meters = this.options.text.segments_meters;
 
     let totalDistance = segments.reduce((acc, segment) => acc + segment.distance, 0);
 
@@ -92,7 +99,7 @@ L.Control.QgsMeasure = L.Control.extend({
 
     this._createTextElement('span', 'segment-measure', this._segments_measures_container, text);
 
-    this._total_distance_text_element.innerText = `${L.Control.QgsMeasure.SEGMENTS_TOTAL} ${totalDistance.toFixed(3)} ${L.Control.QgsMeasure.SEGMENTS_METERS}`;
+    this._total_distance_text_element.innerText = `${this.options.text.segments_total} ${totalDistance.toFixed(3)} ${this.options.text.segments_meters}`;
 
     this._segments_container.scrollTop = this._segments_measures_container.scrollHeight;
   },
@@ -130,7 +137,7 @@ L.Control.QgsMeasure = L.Control.extend({
 
     link = L.DomUtil.create('a', `${className}-measure`, this._container);
     link.href = '#';
-    link.title = L.Control.QgsMeasure.TITLE;
+    link.title = this.options.text.title;
 
     L.DomEvent
       .addListener(link, 'click', L.DomEvent.stopPropagation)
