@@ -1,6 +1,4 @@
 import * as L from "leaflet";
-import "leaflet-draw/dist/leaflet.draw";
-import "leaflet-draw/dist/leaflet.draw.css";
 
 L.Polyline.Measure = L.Draw.Polyline.extend({
   addHooks() {
