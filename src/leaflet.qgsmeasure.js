@@ -5,7 +5,6 @@ import "./leaflet.qgsmeasure.css";
 L.Control.QgsMeasure = L.Control.extend({
   options: {
     position: 'topleft',
-    handler: {},
     shapeOptions: {
       color: "#d07f03",
       stroke: true,
@@ -28,18 +27,6 @@ L.Control.QgsMeasure = L.Control.extend({
     },
   },
 
-  toggle() {
-    if (this.handler.enabled()) {
-      this.handler.disable.call(this.handler);
-    } else {
-      this.handler.enable.call(this.handler);
-    }
-  },
-
-  getSegments() {
-    return this.handler.getSegments();
-  },
-
   initialize(options) {
     options = options || {};
     /*
@@ -50,6 +37,22 @@ L.Control.QgsMeasure = L.Control.extend({
     options.text = L.Util.extend(this.options.text, options.text);
 
     L.Util.setOptions(this, options);
+  },
+
+  enabled() {
+    return this._handler.enabled();
+  },
+
+  toggle() {
+    if (this._handler.enabled()) {
+      this._handler.disable.call(this._handler);
+    } else {
+      this._handler.enable.call(this._handler);
+    }
+  },
+
+  getSegments() {
+    return this._handler.getSegments();
   },
 
   _createTextElement(tag, className, container, text) {
@@ -112,7 +115,7 @@ L.Control.QgsMeasure = L.Control.extend({
   },
 
   onAdd(map) {
-    this.handler = new L.Polyline.Measure(map, this.options);
+    this._handler = new L.Polyline.Measure(map, this.options);
 
     if (this.options.button) {
       L.DomEvent.on(this.options.button, "click", this.toggle, this);
@@ -123,13 +126,12 @@ L.Control.QgsMeasure = L.Control.extend({
     this._map.on("qgsmeasure:newsegment", this._startMeasure, this);
     this._map.on("qgsmeasure:measurestop", this._finishMeasure, this);
 
-    /* Leaflet Control */
-    this.handler.on('enabled', () => {
+    this._handler.on('enabled', () => {
       L.DomUtil.addClass(this._segments_container, 'show');
       this.enabled = true;
     }, this);
 
-    this.handler.on('disabled', () => {
+    this._handler.on('disabled', () => {
       delete this.enabled;
       L.DomUtil.removeClass(this._segments_container, 'show');
       this._finishMeasure();

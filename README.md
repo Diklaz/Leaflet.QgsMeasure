@@ -63,13 +63,26 @@ options = {
 };
 ```
 
+### Methods
+
+| Method Name | Description                                       |
+|-------------|---------------------------------------------------|
+| enabled     | Gets a true/false of whether the ruler is enabled |
+| getSegments | Returns a list with all segments in map           |
+| toggle      | Toggles the ruler on or off                       |
+
 ### Events:
 
 * `qgsmeasure:measurestart` - Event fired when the measure starts
 * `qgsmeasure:newsegment` - Event fired when a new segment/vertex is added
   ```js
-  // Event data example:
+  // Event data example: Event fired after inserting 2 -> 3 segment
   {
+    segment: {
+      from: 2,
+      to: 3,
+      distance: 420.2680458268559
+    },
     segments: [ // List with every segment on map
       {
         from: 1,

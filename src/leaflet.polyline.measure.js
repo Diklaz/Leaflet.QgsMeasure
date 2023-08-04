@@ -115,13 +115,18 @@ L.Polyline.Measure = L.Draw.Polyline.extend({
 
     const segmentDistance = this._map.distance(A, B);
 
-    this._segments.push({
+    const newSegment = {
       from: this._markers.length - 1,
       to: this._markers.length,
       distance: segmentDistance,
-    });
+    };
 
-    this._map.fire("qgsmeasure:newsegment", { segments: this._segments });
+    this._segments.push(newSegment);
+
+    this._map.fire("qgsmeasure:newsegment", {
+      segment: newSegment,
+      segments: this._segments,
+    });
   },
 
   _clearSegments() {

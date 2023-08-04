@@ -11,6 +11,14 @@ module.exports = {
     filename: 'leaflet.qgsmeasure.min.js',
     clean: true,
   },
+  experiments: {
+    outputModule: true,
+  },
+  externalsType: 'window',
+  externals: {
+    leaflet: 'L',
+    'leaflet-draw': 'L.Draw',
+  },
   module: {
     rules: [
       {
