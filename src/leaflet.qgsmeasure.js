@@ -45,8 +45,10 @@ L.Control.QgsMeasure = L.Control.extend({
 
   toggle() {
     if (this._handler.enabled()) {
+      this._map.fire("qgsmeasure:measurestop");
       this._handler.disable.call(this._handler);
     } else {
+      this._map.fire("qgsmeasure:measurestart");
       this._handler.enable.call(this._handler);
     }
   },
@@ -124,15 +126,13 @@ L.Control.QgsMeasure = L.Control.extend({
 
     this._map.on("qgsmeasure:measurestart", this._createSegmentContainer, this);
     this._map.on("qgsmeasure:newsegment", this._startMeasure, this);
-    this._map.on("qgsmeasure:measurestop", this._finishMeasure, this);
+    this._map.on("qgsmeasure:newmeasure", this._finishMeasure, this);
 
     this._handler.on('enabled', () => {
       L.DomUtil.addClass(this._segments_container, 'show');
-      this.enabled = true;
     }, this);
 
     this._handler.on('disabled', () => {
-      delete this.enabled;
       L.DomUtil.removeClass(this._segments_container, 'show');
       this._finishMeasure();
     }, this);

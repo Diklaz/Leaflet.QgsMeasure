@@ -34,8 +34,6 @@ L.Polyline.Measure = L.Draw.Polyline.extend({
   _startShape() {
     this._drawing = true;
 
-    this._map.fire("qgsmeasure:measurestart");
-
     this._poly = new L.Polyline([], this.options.shapeOptions);
 
     // this is added as a placeholder, if leaflet doesn't receive
@@ -79,12 +77,13 @@ L.Polyline.Measure = L.Draw.Polyline.extend({
   _onClick(e) {
     if (this._markers.length > 1 && this._drawing) {
       this._addSegment();
-      this._updateSegmentTooltipNumber();
+      this._updateSegmentsTooltipNumber();
     }
 
     if (!this._drawing) {
       this._removeShape();
       this._startShape();
+      this._map.fire("qgsmeasure:newmeasure");
     }
   },
 
@@ -92,7 +91,7 @@ L.Polyline.Measure = L.Draw.Polyline.extend({
     return this._segments;
   },
 
-  _updateSegmentTooltipNumber() {
+  _updateSegmentsTooltipNumber() {
     let i = 1;
     for (const marker of this._markers) {
       marker.bindTooltip(`${i}`, {
@@ -131,7 +130,6 @@ L.Polyline.Measure = L.Draw.Polyline.extend({
 
   _clearSegments() {
     this._segments = [];
-    this._map.fire("qgsmeasure:measurestop");
   },
 
   _getTooltipText() {

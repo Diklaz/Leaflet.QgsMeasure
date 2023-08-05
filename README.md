@@ -73,7 +73,7 @@ options = {
 
 ### Events:
 
-* `qgsmeasure:measurestart` - Event fired when the measure starts
+* `qgsmeasure:measurestart` - Event fired when the measure handler are added to map
 * `qgsmeasure:newsegment` - Event fired when a new segment/vertex is added
   ```js
   // Event data example: Event fired after inserting 2 -> 3 segment
@@ -100,7 +100,8 @@ options = {
   // sourceTarget...,
   }
   ```
-* `qgsmeasure:measurestop` - Event fired when the measure stops
+* `qgsmeasure:newmeasure` - Event fired when the user starts a new measure
+* `qgsmeasure:measurestop` - Event fired when the measure handler are removed from map
 
 ### Custom html button
 
