@@ -67,7 +67,7 @@ L.Control.QgsMeasure = L.Control.extend({
     }
 
     /* Getting the leaflet top right container */
-    const [topleft] = document.getElementsByClassName("leaflet-top leaflet-right");
+    const [topleft] = document.getElementsByClassName("leaflet-top leaflet-left");
 
     /* Box over the map containing all data */
     this._segments_container = L.DomUtil.create('div', `segments-container leaflet-control`, topleft);
